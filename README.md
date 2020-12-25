@@ -1,25 +1,19 @@
-# J2Team Offline Luckywheel
+# J2Team Community Offline Luckywheel
 
-I write this luckywheel for j2team offline event
+I fix this luckywheel for J2Team Community Offline event from the origin [HellCatVN](https://github.com/HellCatVN/lucky-wheel)
 
-### Prizes Config
+### Usage
 
-```js
-Line 34;
-var prizes = [
-  {
-    text: "Hoodie J2Team", // Require
-    img: "images/Ao.png", // Optional
-    number: 1,
-    percentage: 1 // (100%) | 0.5 // 50% | 0.01 // 1%
-  }
-];
-```
+Import database, go to admin/index.php to manage prizes 
+
+### Config
+
+Change database name in admin/connect.php
 
 ### Mode Config
 
 ```js
-Line 80;
+Line 56;
 mode : both // For display both image and text
 mode : null // For display text if only text and image if having it will having no text
 ```
@@ -29,20 +23,26 @@ mode : null // For display text if only text and image if having it will having 
 Using sweetalert 2 library
 
 ```js
-  Line 86
-  if(data == null){
-    // This for when no more prize
-    Swal.fire(
-      'Chương trình kết thúc',
-      'Đã hết phần thưởng',
-      'error'
-    )
-  }else{
-    // This for when spin is done
-    Swal.fire(
-      'Đã trúng giải',
-      data,
-      'success'
-    )
-  }
+Line 62;
+if(data == null){
+  Swal.fire(
+    'Chương trình kết thúc',
+    'Đã hết phần thưởng',
+    'error'
+  )
+} 
+else{
+  Swal.fire({
+    title: '<strong>Đã trúng giải</strong>',
+    html:`<h1>${data}</h1>`,
+    showCancelButton: true,
+    confirmButtonText:'<i class="fa fa-thumbs-up"></i> Nhận giải!',
+    cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+    backdrop: false
+  }).then((result) => {
+    if (result.isConfirmed) {
+      decreAmount();
+    } 
+  })
+}
 ```

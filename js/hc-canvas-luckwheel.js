@@ -126,12 +126,12 @@
       html.push('<li class="hc-luckywheel-item"> <span style="');
       html.push(transform + ": rotate(" + i * turnNum + 'turn)">');
       if (opts.mode == "both") {
-        html.push("<p id='curve'>" + prizeList[i].text + "</p>");
-        html.push('<img src="' + prizeList[i].img + '" />');
+        html.push("<p id='curve'>" + prizeList[i].name + "</p>");
+        html.push('<img src="images/' + prizeList[i].image + '" />');
       } else if (prizeList[i].img) {
-        html.push('<img src="' + prizeList[i].img + '" />');
+        html.push('<img src="images/' + prizeList[i].image + '" />');
       } else {
-        html.push('<p id="curve">' + prizeList[i].text + "</p>");
+        html.push('<p id="curve">' + prizeList[i].name + "</p>");
       }
       html.push("</span> </li>");
       if (i + 1 === num) {
@@ -169,15 +169,14 @@
       addClass(btn, "disabled");
 
       fnGetPrize(function(data) {
-        if (data[0] == null && !data[1] == null) {
+        if (data == null) {
           return;
         }
         optsPrize = {
-          prizeId: data[0],
-          chances: data[1]
+          prizeId: data
         };
         deg = deg || 0;
-        deg = deg + (360 - (deg % 360)) + (360 * 10 - data[0] * (360 / num));
+        deg = deg + (360 - (deg % 360)) + (360 * 10 - data * (360 / num));
         runRotate(deg);
       });
       bind(container, transitionEnd, eGot);
@@ -185,12 +184,8 @@
   }
 
   function eGot() {
-    if (optsPrize.chances == null) {
-      return fnGotBack(null);
-    } else {
-      removeClass(btn, "disabled");
-      return fnGotBack(prizes[optsPrize.prizeId].text);
-    }
+    removeClass(btn, "disabled");
+    return fnGotBack(prizes[optsPrize.prizeId].name);
   }
 
   /**
