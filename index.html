@@ -33,13 +33,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/hc-canvas-luckwheel.js"></script>
     <script>
-      var isPercentage = true;
-      var prizes = [];
-      var id;
+      let nullable = 1;
+      let prizes = [];
+      let id;
       $(document).ready(function() {
         $.ajax({
           url: 'admin/get_full_prizes.php',
           dataType: 'json',
+          data: { nullable: nullable}
         })
         .done(function(response) {
           prizes = response;

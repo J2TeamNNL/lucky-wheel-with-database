@@ -13,7 +13,13 @@ Change database name in admin/connect.php
 ### Mode Config
 
 ```js
-Line 56;
+Line 36:
+let nullable = 0 // For display only prizes have amount > 0
+let nullable = 1 // For display only prizes have amount >= 0
+```
+
+```js
+Line 57:
 mode : both // For display both image and text
 mode : null // For display text if only text and image if having it will having no text
 ```
@@ -22,27 +28,29 @@ mode : null // For display text if only text and image if having it will having 
 
 Using sweetalert 2 library
 
+End:
 ```js
-Line 62;
-if(data == null){
-  Swal.fire(
-    'Chương trình kết thúc',
-    'Đã hết phần thưởng',
-    'error'
-  )
-} 
-else{
-  Swal.fire({
-    title: '<strong>Đã trúng giải</strong>',
-    html:`<h1>${data}</h1>`,
-    showCancelButton: true,
-    confirmButtonText:'<i class="fa fa-thumbs-up"></i> Nhận giải!',
-    cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-    backdrop: false
-  }).then((result) => {
-    if (result.isConfirmed) {
-      decreAmount();
-    } 
-  })
-}
+Line 63:
+Swal.fire(
+  'Chương trình kết thúc',
+  'Đã hết phần thưởng',
+  'error'
+)
+```
+
+Success:
+```js
+Line 70:
+Swal.fire({
+  title: '<strong>Đã trúng giải</strong>',
+  html:`<h1>${data}</h1>`,
+  showCancelButton: true,
+  confirmButtonText:'<i class="fa fa-thumbs-up"></i> Nhận giải!',
+  cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+  backdrop: false
+}).then((result) => {
+  if (result.isConfirmed) {
+    decreAmount();
+  } 
+})
 ```
