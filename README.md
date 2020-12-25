@@ -1,6 +1,6 @@
 # J2Team Community Offline Luckywheel
 
-I fix this luckywheel for J2Team Community Offline event from the origin [HellCatVN](https://github.com/HellCatVN/lucky-wheel)
+I fix this luckywheel for J2Team Community Offline event from the original [HellCatVN](https://github.com/HellCatVN/lucky-wheel)
 
 ### Usage
 
