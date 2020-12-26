@@ -6,4 +6,4 @@ $result = mysqli_query($connect,$sql);
 $each = mysqli_fetch_array($result);
 mysqli_close($connect);
 
-echo $each['id'];
+echo $each['id'] ?? 0;

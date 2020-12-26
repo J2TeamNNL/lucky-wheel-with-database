@@ -12,6 +12,11 @@ $result = mysqli_query($connect,$sql);
 <a href="insert.php">
 	Insert new
 </a>
+<form action="process_invitees.php" method="post">
+	Number invitees
+	<input type="number" name="invitees">
+	<button>Insert</button>
+</form>
 <form action="process_update.php" method="post">
 	<table width="100%" border="1">
 		<caption>

@@ -185,7 +185,13 @@
 
   function eGot() {
     removeClass(btn, "disabled");
-    return fnGotBack(prizes[optsPrize.prizeId].name);
+    if(prizes[optsPrize.prizeId] == 'undefined'){
+      name = 0;
+    }
+    else{
+      name = prizes[optsPrize.prizeId].name;
+    }
+    return fnGotBack(name);
   }
 
   /**

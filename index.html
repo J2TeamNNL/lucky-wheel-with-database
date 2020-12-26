@@ -15,10 +15,18 @@
         margin-top: -250px;
         margin-left: -250px;
       }
+      #header{
+        position:fixed;
+        top: 5%;
+        color: #ffcb3f;
+        text-align: center;
+        width: 100%;
+      }
     </style>
   </head>
   <body class="bg">
     <div class="wrapper typo" id="wrapper">
+      <h1 id="header">STT: <span id="span-number"></span></h1>
       <section id="luckywheel" class="hc-luckywheel">
         <div class="hc-luckywheel-container">
           <canvas class="hc-luckywheel-canvas" width="500px" height="500px"
@@ -36,7 +44,9 @@
       let nullable = 1;
       let prizes = [];
       let id;
+      let number;
       $(document).ready(function() {
+
         $.ajax({
           url: 'admin/get_full_prizes.php',
           dataType: 'json',
@@ -54,39 +64,51 @@
             callback &&
               callback(prizes);
           },
-          mode : "both",
+          mode : null,
           getPrize: function(callback) {
-            randomIndex(callback);
+            getAnother(callback);
           },
           gotBack: function(data) {
-            if(data == null){
-              Swal.fire(
-                'Chương trình kết thúc',
-                'Đã hết phần thưởng',
-                'error'
-              )
-            } 
-            else{
-              Swal.fire({
-                title: '<strong>Đã trúng giải</strong>',
-                html:`<h1>${data}</h1>`,
-                showCancelButton: true,
-                confirmButtonText:'<i class="fa fa-thumbs-up"></i> Nhận giải!',
-                cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-                backdrop: false
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  decreAmount();
-                } 
-              })
-            }
+            Swal.fire({
+              title: '<strong>Đã trúng giải</strong>',
+              html:`<h1>${data}</h1>`,
+              showCancelButton: true,
+              confirmButtonText:'<i class="fa fa-thumbs-up"></i> Nhận giải!',
+              cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+              backdrop: false
+            }).then((result) => {
+              if (result.isConfirmed) {
+                decreAmount();
+              } 
+            })
           }
         });
       }
       function decreAmount() {
         $.ajax({
           url: 'admin/decre_amount.php',
-          data: { id: id},
+          data: { id: id, number: number},
+        })
+      }
+
+      function getAnother(callback) {
+        $.ajax({
+          url: 'admin/get_another.php',
+          dataType: 'html',
+        })
+        .done(function (number_invitess) {
+          number = number_invitess;
+          if(number==0){
+            Swal.fire(
+              'Chương trình kết thúc',
+              'Đã hết phần thưởng',
+              'error'
+            );
+          }
+          else{
+            randomIndex(callback);
+            $("#span-number").html(number);
+          }
         })
       }
 
